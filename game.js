@@ -55,15 +55,15 @@ function animate() {
     int = window.requestAnimationFrame(animate)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.fillStyle = 'purple'
-for (let badTopping of badToppings){
-    ctx.fillRect(badTopping.x, badTopping.y +=(2*badTopping.speedModifier), badTopping.w, badTopping.h)
-    detectCollision(newPlate, badTopping)
-    }
-console.log(badToppings)
+    for (let badTopping of badToppings){
+        ctx.fillRect(badTopping.x, badTopping.y +=(2*badTopping.speedModifier), badTopping.w, badTopping.h)
+        detectCollision(newPlate, badTopping)
+        }
+    // console.log(badToppings)
   
     ctx.drawImage(plate, newPlate.x, newPlate.y, newPlate.w, newPlate.h)
   
-    document.querySelector('body p').innerHTML = pointcounterBadTopping
+    // document.querySelector('body p').innerHTML = pointcounterBadTopping
 
   }
   
@@ -71,7 +71,7 @@ console.log(badToppings)
 
 // Falling pancakes 
 
-class pancake{
+class Pancake{
     constructor(x,y,w,h){
     this.x = Math.random()*canvas.width,
     this.y = -55,
@@ -85,33 +85,67 @@ let pointcounterPancake = 0
 const pancakes = []
 
 setInterval(() => {
-    pointcounter+=100
-pancakes.push(new pancake())
+    pointcounterPancake+=100
+pancakes.push(new Pancake())
 }, 2500)
 
-// let int
+let intPancake
 
-// function animate() {
-//     int = window.requestAnimationFrame(animate)
-//     ctx.clearRect(0, 0, canvas.width, canvas.height)
-//     ctx.fillStyle = 'purple'
-// for (let pancake of pancakes){
-//     ctx.fillRect(pancake.x, pancake.y +=(2*pancake.speedModifier), pancake.w, pancake.h)
-//     detectCollision(newPlate, pancake)
-//     }
-// console.log(pancakes)
+function animatePancake() {
+    intPancake = window.requestAnimationFrame(animatePancake)
+    ctx.fillStyle = 'yellow'
+    for (let pancake of pancakes){
+        ctx.fillRect(pancake.x, pancake.y +=(2*pancake.speedModifier), pancake.w, pancake.h)
+        detectCollision(newPlate, pancake)
+        }
+    console.log('this is being called')
   
-//     ctx.drawImage(plate, newPlate.x, newPlate.y, newPlate.w, newPlate.h)
+    ctx.drawImage(plate, newPlate.x, newPlate.y, newPlate.w, newPlate.h)
   
-//     document.querySelector('body p').innerHTML = pointcounter
+    // document.querySelector('body p').innerHTML = pointcounterPancake
 
-//   }
+  }
   
-//   animate()
+  animatePancake()
 
 // Falling bonus 
 
+class Bonus{
+    constructor(x,y,w,h){
+    this.x = Math.random()*canvas.width,
+    this.y = -55,
+    this.w = 50,
+    this.h = 50,
+    this.speedModifier = Math.random()*2
+    }
+}
 
+let pointcounterBonus = 0
+const bonuses = []
+
+setInterval(() => {
+    pointcounterBonus+=100
+bonuses.push(new Bonus())
+}, 2500)
+
+let intBonus
+
+function animateBonus() {
+    intBonus = window.requestAnimationFrame(animateBonus)
+    ctx.fillStyle = 'pink'
+    for (let bonus of bonuses){
+        ctx.fillRect(bonus.x, bonus.y +=(2*bonus.speedModifier), bonus.w, bonus.h)
+        detectCollision(newPlate, bonus)
+        }
+    console.log('this is being called')
+  
+    ctx.drawImage(plate, newPlate.x, newPlate.y, newPlate.w, newPlate.h)
+  
+    // document.querySelector('body p').innerHTML = pointcounterPancake
+
+  }
+  
+  animateBonus()
 
 
 
@@ -128,7 +162,7 @@ pancakes.push(new pancake())
     }
   }
 
-//   Our pancake stack
+//   Our bonus stack
 // let theStack = new Array [] 
 // function stackMyCakes{
 // if(something colides & is the object we want) 
