@@ -3,6 +3,9 @@ canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 const ctx = canvas.getContext('2d')
 
+
+let stackedArray =[]
+
 // THE PLATE 
 
 let plate = new Image()
@@ -59,9 +62,14 @@ function animate() {
         ctx.fillRect(badTopping.x, badTopping.y +=(2*badTopping.speedModifier), badTopping.w, badTopping.h)
         detectCollision(newPlate, badTopping)
         }
+        
     // console.log(badToppings)
   
     ctx.drawImage(plate, newPlate.x, newPlate.y, newPlate.w, newPlate.h)
+    for (let i =0; i< stackedArray.length; i++){
+        ctx.fillRect(newPlate.x, newPlate.y - stackedArray[i+1] * 50, stackedArray[i].w, stackedArray[i].h)
+        detectCollision(newPlate, stackedArray[i])
+        }
   
     // document.querySelector('body p').innerHTML = pointcounterBadTopping
 
@@ -98,7 +106,7 @@ function animatePancake() {
         ctx.fillRect(pancake.x, pancake.y +=(2*pancake.speedModifier), pancake.w, pancake.h)
         detectCollision(newPlate, pancake)
         }
-    console.log('this is being called')
+    // console.log('this is being called')
   
     ctx.drawImage(plate, newPlate.x, newPlate.y, newPlate.w, newPlate.h)
   
@@ -130,6 +138,7 @@ bonuses.push(new Bonus())
 
 let intBonus
 
+
 function animateBonus() {
     intBonus = window.requestAnimationFrame(animateBonus)
     ctx.fillStyle = 'pink'
@@ -137,7 +146,7 @@ function animateBonus() {
         ctx.fillRect(bonus.x, bonus.y +=(2*bonus.speedModifier), bonus.w, bonus.h)
         detectCollision(newPlate, bonus)
         }
-    console.log('this is being called')
+    // console.log('this is being called')
   
     ctx.drawImage(plate, newPlate.x, newPlate.y, newPlate.w, newPlate.h)
   
@@ -158,7 +167,11 @@ function animateBonus() {
         thePlate.h + thePlate.y > badTopping.y) {
         console.log('collision')
         // window.cancelAnimationFrame(int)
-        window.location.reload()
+            // stackedArray.push(badTopping)
+            // need to delete initial obj that collided with array
+            console.log(stackedArray)
+            // debugger
+        // window.location.reload()
     }
   }
 
