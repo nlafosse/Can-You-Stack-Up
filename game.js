@@ -51,26 +51,27 @@ class badTopping{
     this.w = 50,
     this.h = 50,
     this.speedModifier = Math.random()*2,
-    this.id = Math.random()
+    this.id = id
     }
 }
 class Pancake{
-    constructor(x,y,w,h){
+    constructor(id){
     this.x = Math.random()*canvas.width,
     this.y = -55,
     this.w = 50,
     this.h = 50,
-    this.speedModifier = Math.random()*2
-
+    this.speedModifier = Math.random()*2,
+    this.id = id
     }
 }
 class Bonus{
-    constructor(x,y,w,h){
+    constructor(id){
     this.x = Math.random()*canvas.width,
     this.y = -55,
     this.w = 50,
     this.h = 50,
-    this.speedModifier = Math.random()*2
+    this.speedModifier = Math.random()*2,
+    this.id = id
     }
 }
 
@@ -80,10 +81,10 @@ let pointcounterBadTopping = 0
 let badToppingsArr = []
 
 let pointcounterBonus = 0
-const bonusesArr = []
+let bonusesArr = []
 
 let pointcounterPancake = 0
-const pancakesArr = []
+let pancakesArr = []
 
 // intervals for falling objects
 let id = 0
@@ -94,13 +95,13 @@ setInterval(() => {
     }, 2000)
 
 setInterval(() => {
-    pointcounterPancake+=100
-    pancakesArr.push(new Pancake())
+    // pointcounterPancake+=100
+    pancakesArr.push(new Pancake(id++))
     }, 2500)
     
 setInterval(() => {
-    pointcounterBonus+=100
-    bonusesArr.push(new Bonus())
+    // pointcounterBonus+=100
+    bonusesArr.push(new Bonus(id++))
     }, 3000)
 
 let int
@@ -165,7 +166,7 @@ if (thePlate.x < pancake.x + pancake.w &&
     thePlate.x + thePlate.w > pancake.x &&
     thePlate.y < pancake.y + pancake.h &&
     thePlate.h + thePlate.y > pancake.y) {
-    console.log('collision', pancake)
+    pancakesArr = pancakesArr.filter(pancakeItem => pancakeItem.id !== pancake.id)
     // pancakesArr = pancakesArr.filter(badItem => {
     //     return badItem.id !== pancake.id
     // })
