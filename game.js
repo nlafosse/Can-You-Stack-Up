@@ -192,8 +192,8 @@ if (thePlate.x < badTopping.x + badTopping.w &&
     thePlate.y < badTopping.y + badTopping.h &&
     thePlate.h + thePlate.y > badTopping.y) {
     console.log('collision', badTopping)
-    badToppingsArr = badToppingsArr.filter(badItem => {
-        return badItem.id !== badTopping.id
+    // badToppingsArr = badToppingsArr.filter(badItem => {
+    //     return badItem.id !== badTopping.id
     // })
     // window.cancelAnimationFrame(int)
     // stackedArray.push(badTopping)
