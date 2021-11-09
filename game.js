@@ -21,15 +21,6 @@ let newPlate = {
     h: 250,
 } 
 
-// class newPlate {
-//     constructor(x, y, w, h){
-//     this.x =150,
-//     this.y = canvas.height-260,
-//     this.w = 325,
-//     this.h = 250
-//     // this.stackedArray = [plate]
-//     }
-// }
 
 window.onkeydown = function (e) {
     switch (e.key) {
@@ -134,12 +125,12 @@ function animate() {
         } 
     // plate catcher
     ctx.drawImage(plate, newPlate.x, newPlate.y, newPlate.w, newPlate.h)
-    // for (let i =0; i< stackedArray.length; i++){
-    //     ctx.fillRect(newPlate.x, newPlate.y - stackedArray[i+1] * 50, stackedArray[i].w, stackedArray[i].h)
-    //     // detectCollision(newPlate, stackedArray[i])
-    // }
-  
-    // document.querySelector('body p').innerHTML = pointcounterBadTopping
+
+    for(let i =0; i < stackedArray.length; i++){
+     let pancake=stackedArray[i]
+    ctx.drawImage(plate,newPlate.x, newPlate.y-50*(i+1), pancake.w, pancake.h)
+    }
+    
 }
   
 animate()
@@ -167,16 +158,9 @@ if (thePlate.x < pancake.x + pancake.w &&
     thePlate.y < pancake.y + pancake.h &&
     thePlate.h + thePlate.y > pancake.y) {
     pancakesArr = pancakesArr.filter(pancakeItem => pancakeItem.id !== pancake.id)
-    // pancakesArr = pancakesArr.filter(badItem => {
-    //     return badItem.id !== pancake.id
-    // })
-    // window.cancelAnimationFrame(int)
-    // stackedArray.push(pancake)
-    // need to delete initial obj that collided with array
+    stackedArray.push(pancake)
+    }
     
-    // debugger
-    // window.location.reload()
-}
 }
 function detectBonusCollision(thePlate, bonus) {
 if (thePlate.x < bonus.x + bonus.w &&
@@ -184,7 +168,7 @@ if (thePlate.x < bonus.x + bonus.w &&
     thePlate.y < bonus.y + bonus.h &&
     thePlate.h + thePlate.y > bonus.y) {
     console.log('collision', bonus)
-    // bonussArr = bonussArr.filter(badItem => {
+    bonusesArr = bonusesArr.filter(bonusItem => bonusItem.id !== bonus.id)
     //     return badItem.id !== bonus.id
     // })
     // window.cancelAnimationFrame(int)
