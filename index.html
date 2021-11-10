@@ -6,15 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css" />
     <title>Game Name TBD</title>
+    <script async type="text/javascript" src="./game.js"></script>
+
 </head>
 <body>
+    <div class="game-intro">
+        <img src="./images/logo.png" alt="" class="logo-img" />
+        <br />
+        <button id="start-button" onclick="startGame()">Start Game</button>
+        <p>Use the left and right arrow to move the plate and catch as many pancakes as you can!</p>
+       
+      </div>
+    
+  
     <div id="score"></div>
     
     <div id="game-board">
         <canvas id='canvas' width='500' height='700'></canvas>
     </div>
     
-    <script type="text/javascript" src="./game.js"></script>
+    
+   
 </body>
 
 </html>

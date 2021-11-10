@@ -106,8 +106,8 @@ let int
 // GAME ENGINE 
 
 
-function animate() {
-    int = window.requestAnimationFrame(animate)
+function startGame() {
+    int = window.requestAnimationFrame(startGame)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     // draw badToppings objects
     ctx.fillStyle = 'purple'
@@ -133,12 +133,12 @@ function animate() {
 
     for(let i =0; i < stackedArray.length; i++){
         let pancake=stackedArray[i]
-        ctx.drawImage(plate,newPlate.x, newPlate.y-50*(i+1), pancake.w, pancake.h)
+        ctx.drawImage(plate, newPlate.x, newPlate.y-50*(i+1), pancake.w, pancake.h)
     }
     
 }
   
-animate()
+// startGame()
 
 
 // Collision Logics
@@ -176,6 +176,13 @@ function detectPancakeCollision(thePlate, pancake) {
         thePlate.h + thePlate.y > pancake.y) {
             pancakesArr = pancakesArr.filter(pancakeItem => pancakeItem.id !== pancake.id)
             stackedArray.push(pancake)
+            for(let i =0; i < thePlate.length; i++){
+                let topPancake = 
+                if(thePlate.y > pancake.h) {
+                
+                }
+            }
+            
             //COUNTING PANCAKES. If 10 pancakes stacked on plate END OF GAME
             if(stackedArray.length === 10) {
                 alert("WHO WANTS SOME PANCAKES?");
