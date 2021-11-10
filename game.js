@@ -163,14 +163,14 @@ function startGame() {
 
 // Collision Logics
 
-function detectBadToppingCollision(plate, badTopping) {
-    if (plate.x < badTopping.x + badTopping.w &&
-        plate.x + plate.w > badTopping.x &&
-        plate.y < badTopping.y + badTopping.h &&
-        plate.h + plate.y > badTopping.y) {
+function detectBadToppingCollision(thePlate, badTopping) {
+    if (thePlate.x < badTopping.x + badTopping.w &&
+        thePlate.x + thePlate.w > badTopping.x &&
+        thePlate.y + stackCollision < badTopping.y + badTopping.h &&
+        thePlate.h + thePlate.y + stackCollision > badTopping.y) {
             badToppingsArr = badToppingsArr.filter(badItem => badItem.id !== badTopping.id)
             // SUBTRACT FROM SCORE
-            plate.score -= 5
+            thePlate.score -= 5
             // UPDATE SCORE DISPLAY
             document.getElementById('score').innerHTML = "SCORE: " + newPlate.score;
         }
@@ -179,8 +179,8 @@ function detectBadToppingCollision(plate, badTopping) {
 function detectBonusCollision(thePlate, bonus) {
     if (thePlate.x < bonus.x + bonus.w &&
         thePlate.x + thePlate.w > bonus.x &&
-        thePlate.y < bonus.y + bonus.h &&
-        thePlate.h + thePlate.y > bonus.y) {
+        thePlate.y + stackCollision < bonus.y + bonus.h &&
+        thePlate.h + thePlate.y + stackCollision > bonus.y) {
             bonusesArr = bonusesArr.filter(bonusItem => bonusItem.id !== bonus.id)
             // ADD TO SCORE
             thePlate.score += 10
