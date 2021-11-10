@@ -7,7 +7,7 @@ const ctx = canvas.getContext('2d')
 
 // THE PLATE 
 let plate = new Image()
-plate.src = 'images/plate.png'
+plate.src = './images/plate.png'
 plate.onload = () => {
     ctx.drawImage(plate, 150, canvas.height - 200, 200, 60)
     document.getElementById('score').innerHTML = "SCORE: " + newPlate.score;
@@ -30,7 +30,7 @@ let newPlate = {
 // // THE PANCAKE -- in progress!
 
 let pancakeImage = new Image()
-pancakeImage.src = 'images/Pancake1.png'
+pancakeImage.src = './images/Pancake1.png'
 pancakeImage.onload = () => {
     ctx.drawImage(pancakeImage, Math.random()*canvas.width, 55, 140, 50)
 }
@@ -46,6 +46,12 @@ let butterImage = new Image()
 butterImage.src = './images/butter.png'
 butterImage.onload = () => {
     ctx.drawImage(butterImage, Math.random()*canvas.width, 55, 140, 50)
+}
+
+let sillySquidImage = new Image()
+sillySquidImage.src = './images/sillysquid.png'
+sillySquidImage.onload = () => {
+    ctx.drawImage(sillySquidImage, Math.random()*canvas.width, 55, 140, 50)
 }
 
 window.onkeydown = function (e) {
@@ -109,19 +115,10 @@ let pancakesArr = []
 let id = 0
 
 setInterval(() => {
-    //pointcounterBadTopping+=100
     badToppingsArr.push(new badTopping(id++))
-    }, 2000)
-
-setInterval(() => {
-    // pointcounterPancake+=100
     pancakesArr.push(new Pancake(id++))
-    }, 2500)
-    
-setInterval(() => {
-    // pointcounterBonus+=100
     bonusesArr.push(new Bonus(id++))
-    }, 3000)
+    }, 2000)
 
 let int
 
@@ -134,12 +131,10 @@ function startGame() {
     int = window.requestAnimationFrame(startGame)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     // draw badToppings objects
-    // ctx.fillStyle = 'purple'
-    // for (let badTopping of badToppingsArr){
-    //     ctx.fillRect(badTopping.x, badTopping.y +=(2*badTopping.speedModifier), badTopping.w, badTopping.h)
-    //     console.log(badToppingsArr)
-    //     detectBadToppingCollision(newPlate, badTopping)
-    //     }
+    for (let badTopping of badToppingsArr){
+        ctx.drawImage(sillySquidImage, badTopping.x, badTopping.y +=(2*badTopping.speedModifier), badTopping.w, badTopping.h)
+        detectBadToppingCollision(newPlate, badTopping)
+        }
     // draw pancakes objects
     for (let pancake of pancakesArr){
         ctx.drawImage(pancakeImage, pancake.x, pancake.y +=(2*pancake.speedModifier), pancake.w, pancake.h)
