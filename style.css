@@ -1,5 +1,9 @@
 canvas {
     border: 1px solid blue;
+    background-image: url("images/dining-room.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
 }
 
 #score
