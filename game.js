@@ -134,6 +134,7 @@ function animate() {
     for(let i =0; i < stackedArray.length; i++){
         let pancake=stackedArray[i]
         ctx.drawImage(plate,newPlate.x, newPlate.y-50*(i+1), pancake.w, pancake.h)
+        newPlate.y += pancake.y-50*(i+1)
     }
     
 }
@@ -176,6 +177,9 @@ function detectPancakeCollision(thePlate, pancake) {
         thePlate.h + thePlate.y > pancake.y) {
             pancakesArr = pancakesArr.filter(pancakeItem => pancakeItem.id !== pancake.id)
             stackedArray.push(pancake)
+            // for(pancake in stackedArray){
+            //     thePlate.y += pancake[i+1].y
+            // }
             //COUNTING PANCAKES. If 10 pancakes stacked on plate END OF GAME
             if(stackedArray.length === 10) {
                 alert("WHO WANTS SOME PANCAKES?");
