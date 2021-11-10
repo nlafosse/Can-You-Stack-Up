@@ -31,9 +31,6 @@ let newPlate = {
 
 let pancakeImage = new Image()
 pancakeImage.src = './images/Pancake1.png'
-pancakeImage.onload = () => {
-    ctx.drawImage(pancakeImage, Math.random()*canvas.width, 55, 140, 50)
-}
 
 let newPancake = {
     x: Math.random()*canvas.width,
@@ -44,15 +41,9 @@ let newPancake = {
 
 let butterImage = new Image()
 butterImage.src = './images/butter.png'
-butterImage.onload = () => {
-    ctx.drawImage(butterImage, Math.random()*canvas.width, 55, 140, 50)
-}
 
 let sillySquidImage = new Image()
 sillySquidImage.src = './images/sillysquid.png'
-sillySquidImage.onload = () => {
-    ctx.drawImage(sillySquidImage, Math.random()*canvas.width, 55, 140, 50)
-}
 
 window.onkeydown = function (e) {
     switch (e.key) {
