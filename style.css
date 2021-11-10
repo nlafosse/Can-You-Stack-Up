@@ -1,3 +1,10 @@
 canvas {
     border: 1px solid blue;
 }
+
+#score
+{
+    font-size: 20px;
+    font-weight: bold;
+    color: #CC0000;
+}

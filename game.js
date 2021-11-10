@@ -10,6 +10,8 @@ let plate = new Image()
 plate.src = 'images/pancake.jpeg'
 plate.onload = () => {
     ctx.drawImage(plate, 150, canvas.height - 260, 158, 250)
+    document.getElementById('score').innerHTML = "SCORE: " + newPlate.score;
+    
 }
 
 let stackedArray = []  // new array for collided objs that need to stack
@@ -19,8 +21,11 @@ let newPlate = {
     y: canvas.height-260,
     w: 325,
     h: 250,
+    // SCORE COUNTER
+    score: 0,
+    // PANCAKE COUNTER
+    pancakeCount: 0
 } 
-
 
 window.onkeydown = function (e) {
     switch (e.key) {
@@ -68,13 +73,13 @@ class Bonus{
 
 
 // arrays of falling objects &
-let pointcounterBadTopping = 0
+// let pointcounterBadTopping = 0
 let badToppingsArr = []
 
-let pointcounterBonus = 0
+// let pointcounterBonus = 0
 let bonusesArr = []
 
-let pointcounterPancake = 0
+// let pointcounterPancake = 0
 let pancakesArr = []
 
 // intervals for falling objects
@@ -104,20 +109,20 @@ let int
 function animate() {
     int = window.requestAnimationFrame(animate)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    // draw badToppings objs
+    // draw badToppings objects
     ctx.fillStyle = 'purple'
     for (let badTopping of badToppingsArr){
         ctx.fillRect(badTopping.x, badTopping.y +=(2*badTopping.speedModifier), badTopping.w, badTopping.h)
         console.log(badToppingsArr)
         detectBadToppingCollision(newPlate, badTopping)
         }
-    // draw pancakes objs
+    // draw pancakes objects
     ctx.fillStyle = 'yellow'
     for (let pancake of pancakesArr){
         ctx.fillRect(pancake.x, pancake.y +=(2*pancake.speedModifier), pancake.w, pancake.h)
         detectPancakeCollision(newPlate, pancake)
         }
-    // draw bonus objs
+    // draw bonus objects
     ctx.fillStyle = 'pink'
     for (let bonus of bonusesArr){
         ctx.fillRect(bonus.x, bonus.y +=(2*bonus.speedModifier), bonus.w, bonus.h)
@@ -127,8 +132,8 @@ function animate() {
     ctx.drawImage(plate, newPlate.x, newPlate.y, newPlate.w, newPlate.h)
 
     for(let i =0; i < stackedArray.length; i++){
-     let pancake=stackedArray[i]
-    ctx.drawImage(plate,newPlate.x, newPlate.y-50*(i+1), pancake.w, pancake.h)
+        let pancake=stackedArray[i]
+        ctx.drawImage(plate,newPlate.x, newPlate.y-50*(i+1), pancake.w, pancake.h)
     }
     
 }
@@ -138,49 +143,44 @@ animate()
 
 // Collision Logics
 
-function detectBadToppingCollision(plate, obj) {
-if (plate.x < obj.x + obj.w &&
-    plate.x + plate.w > obj.x &&
-    plate.y < obj.y + obj.h &&
-    plate.h + plate.y > obj.y) {
-    console.log(obj.id)
-    badToppingsArr = badToppingsArr.filter(badItem => badItem.id !== obj.id)
-    // window.cancelAnimationFrame(int)
-    // stackedArray.push(badTopping)
-    // need to delete initial obj that collided with array
-    // debugger
-    // window.location.reload()
-}
-}
-function detectPancakeCollision(thePlate, pancake) {
-if (thePlate.x < pancake.x + pancake.w &&
-    thePlate.x + thePlate.w > pancake.x &&
-    thePlate.y < pancake.y + pancake.h &&
-    thePlate.h + thePlate.y > pancake.y) {
-    pancakesArr = pancakesArr.filter(pancakeItem => pancakeItem.id !== pancake.id)
-    stackedArray.push(pancake)
-    }
-    
-}
-function detectBonusCollision(thePlate, bonus) {
-if (thePlate.x < bonus.x + bonus.w &&
-    thePlate.x + thePlate.w > bonus.x &&
-    thePlate.y < bonus.y + bonus.h &&
-    thePlate.h + thePlate.y > bonus.y) {
-    console.log('collision', bonus)
-    bonusesArr = bonusesArr.filter(bonusItem => bonusItem.id !== bonus.id)
-    //     return badItem.id !== bonus.id
-    // })
-    // window.cancelAnimationFrame(int)
-    // stackedArray.push(bonus)
-    // need to delete initial obj that collided with array
-    // debugger
-    // window.location.reload()
-}
+function detectBadToppingCollision(plate, badTopping) {
+    if (plate.x < badTopping.x + badTopping.w &&
+        plate.x + plate.w > badTopping.x &&
+        plate.y < badTopping.y + badTopping.h &&
+        plate.h + plate.y > badTopping.y) {
+            badToppingsArr = badToppingsArr.filter(badItem => badItem.id !== badTopping.id)
+            // SUBTRACT FROM SCORE
+            plate.score -= 5
+            // UPDATE SCORE DISPLAY
+            document.getElementById('score').innerHTML = "SCORE: " + newPlate.score;
+        }
 }
 
-//   Our bonus stack
-// let theStack = new Array [] 
-// function stackMyCakes{
-// if(something colides & is the object we want) 
-// {theStack.push(that thing)}
+function detectBonusCollision(thePlate, bonus) {
+    if (thePlate.x < bonus.x + bonus.w &&
+        thePlate.x + thePlate.w > bonus.x &&
+        thePlate.y < bonus.y + bonus.h &&
+        thePlate.h + thePlate.y > bonus.y) {
+            bonusesArr = bonusesArr.filter(bonusItem => bonusItem.id !== bonus.id)
+            // ADD TO SCORE
+            thePlate.score += 10
+            // UPDATE SCORE DISPLAY
+            document.getElementById('score').innerHTML = "SCORE: " + newPlate.score;
+        }
+}
+
+function detectPancakeCollision(thePlate, pancake) {
+    if (thePlate.x < pancake.x + pancake.w &&
+        thePlate.x + thePlate.w > pancake.x &&
+        thePlate.y < pancake.y + pancake.h &&
+        thePlate.h + thePlate.y > pancake.y) {
+            pancakesArr = pancakesArr.filter(pancakeItem => pancakeItem.id !== pancake.id)
+            stackedArray.push(pancake)
+            //COUNTING PANCAKES. If 10 pancakes stacked on plate END OF GAME
+            if(stackedArray.length === 10) {
+                alert("WHO WANTS SOME PANCAKES?");
+                document.location.reload();
+                clearInterval(interval); // Needed for Chrome to end game
+            }
+    }
+}
