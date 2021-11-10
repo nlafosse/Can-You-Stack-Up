@@ -32,18 +32,22 @@ let newPlate = {
 let pancakeImage = new Image()
 pancakeImage.src = './images/Pancake1.png'
 
-let newPancake = {
-    x: Math.random()*canvas.width,
-    y: 55,
-    w: 140,
-    h: 50
-}
-
+//GOOD TOPPINGS
 let butterImage = new Image()
 butterImage.src = './images/butter.png'
 
+//BAD TOPPINGS
 let sillySquidImage = new Image()
 sillySquidImage.src = './images/sillysquid.png'
+
+let broccoliImage = new Image()
+broccoliImage.src = './images/broccoli.png'
+
+let hotsauceImage = new Image()
+hotsauceImage.src = './images/hotsauce.png'
+
+let badToppingImages =[sillySquidImage, broccoliImage, hotsauceImage]
+
 
 window.onkeydown = function (e) {
     switch (e.key) {
@@ -66,6 +70,7 @@ class badTopping{
     this.h = 50,
     this.speedModifier = Math.random()*2,
     this.id = id
+    this.image = badToppingImages[Math.floor(Math.random()*badToppingImages.length)]
     }
 }
 class Pancake{
@@ -93,13 +98,9 @@ class Bonus{
 
 
 // arrays of falling objects &
-// let pointcounterBadTopping = 0
+
 let badToppingsArr = []
-
-// let pointcounterBonus = 0
 let bonusesArr = []
-
-// let pointcounterPancake = 0
 let pancakesArr = []
 
 // intervals for falling objects
@@ -111,8 +112,6 @@ setInterval(() => {
     bonusesArr.push(new Bonus(id++))
     }, 2000)
 
-// let int
-
 
 // GAME ENGINE 
 
@@ -123,9 +122,10 @@ function startGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     // draw badToppings objects
     for (let badTopping of badToppingsArr){
-        ctx.drawImage(sillySquidImage, badTopping.x, badTopping.y +=(2*badTopping.speedModifier), badTopping.w, badTopping.h)
+        ctx.drawImage(badTopping.image, badTopping.x, badTopping.y +=(2*badTopping.speedModifier), badTopping.w, badTopping.h)
         detectBadToppingCollision(newPlate, badTopping)
         }
+   
     // draw pancakes objects
     for (let pancake of pancakesArr){
         ctx.drawImage(pancakeImage, pancake.x, pancake.y +=(2*pancake.speedModifier), pancake.w, pancake.h)
@@ -186,12 +186,12 @@ function detectPancakeCollision(thePlate, pancake) {
         thePlate.h + thePlate.y + stackCollision > pancake.y) {
             pancakesArr = pancakesArr.filter(pancakeItem => pancakeItem.id !== pancake.id)
             stackedArray.push(pancake)
-            stackCollision -= 20
+            stackCollision -= 12
             // for(pancake in stackedArray){
             //     thePlate.y += pancake[i+1].y
             // }
             //COUNTING PANCAKES. If 10 pancakes stacked on plate END OF GAME
-            if(stackedArray.length === 10) {
+            if(stackedArray.length === 30) {
                 alert("WHO WANTS SOME PANCAKES?");
                 document.location.reload();
                 clearInterval(interval); // Needed for Chrome to end game
