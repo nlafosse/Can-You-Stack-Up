@@ -134,7 +134,7 @@ function animate() {
     for(let i =0; i < stackedArray.length; i++){
         let pancake=stackedArray[i]
         ctx.drawImage(plate,newPlate.x, newPlate.y-50*(i+1), pancake.w, pancake.h)
-        newPlate.y += pancake.y-50*(i+1)
+        newPlate.y += pancake.y
     }
     
 }
