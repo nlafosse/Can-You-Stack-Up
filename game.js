@@ -7,9 +7,9 @@ const ctx = canvas.getContext('2d')
 
 // THE PLATE 
 let plate = new Image()
-plate.src = 'images/pancake.jpeg'
+plate.src = 'images/plate.png'
 plate.onload = () => {
-    ctx.drawImage(plate, 150, canvas.height - 260, 158, 250)
+    ctx.drawImage(plate, 150, canvas.height - 220, 200, 60)
     document.getElementById('score').innerHTML = "SCORE: " + newPlate.score;
     
 }
@@ -18,14 +18,29 @@ let stackedArray = []  // new array for collided objs that need to stack
 
 let newPlate = {
     x: 150,
-    y: canvas.height-260,
-    w: 325,
-    h: 250,
+    y: canvas.height-220,
+    w: 200,
+    h: 60,
     // SCORE COUNTER
     score: 0,
     // PANCAKE COUNTER
     pancakeCount: 0
 } 
+
+// // THE PANCAKE -- in progress!
+
+// let pancake = new Image()
+// pancake.src = 'images/Pancake1.png'
+// pancake.onload = () => {
+//     ctx.drawImage(pancake, Math.random()*canvas.width, -55, 50, 50)
+// }
+
+// let newPancake = {
+//     x: Math.random()*canvas.width,
+//     y: -55,
+//     w: 50,
+//     h: 50
+// }
 
 window.onkeydown = function (e) {
     switch (e.key) {
@@ -117,7 +132,8 @@ function startGame() {
         detectBadToppingCollision(newPlate, badTopping)
         }
     // draw pancakes objects
-    ctx.fillStyle = 'yellow'
+    // ctx.drawImage(Pancake, newPancake.x, newPancake.y, newPancake.w, newPancake.h)
+
     for (let pancake of pancakesArr){
         ctx.fillRect(pancake.x, pancake.y +=(2*pancake.speedModifier), pancake.w, pancake.h)
         detectPancakeCollision(newPlate, pancake)
@@ -133,8 +149,7 @@ function startGame() {
 
     for(let i =0; i < stackedArray.length; i++){
         let pancake=stackedArray[i]
-        ctx.drawImage(plate,newPlate.x, newPlate.y-50*(i+1), pancake.w, pancake.h)
-        newPlate.y += pancake.y-50*(i+1)
+        ctx.drawImage(plate, newPlate.x, newPlate.y-10*(i+1), pancake.w, pancake.h)
     }
     
 }
