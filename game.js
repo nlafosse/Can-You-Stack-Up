@@ -7,9 +7,9 @@ const ctx = canvas.getContext('2d')
 
 // THE PLATE 
 let plate = new Image()
-plate.src = 'images/plate.png'
+plate.src = './images/plate.png'
 plate.onload = () => {
-    ctx.drawImage(plate, 150, canvas.height - 220, 200, 60)
+    ctx.drawImage(plate, 150, canvas.height - 200, 200, 60)
     document.getElementById('score').innerHTML = "SCORE: " + newPlate.score;
     
 }
@@ -18,7 +18,7 @@ let stackedArray = []  // new array for collided objs that need to stack
 
 let newPlate = {
     x: 150,
-    y: canvas.height-220,
+    y: canvas.height-200,
     w: 200,
     h: 60,
     // SCORE COUNTER
@@ -29,18 +29,30 @@ let newPlate = {
 
 // // THE PANCAKE -- in progress!
 
-let pancakeImg = new Image()
-pancakeImg.src = 'images/Pancake1.png'
-// pancake.onload = () => {
-//     ctx.drawImage(pancake, Math.random()*canvas.width, -55, 50, 50)
-// }
+let pancakeImage = new Image()
+pancakeImage.src = './images/Pancake1.png'
+pancakeImage.onload = () => {
+    ctx.drawImage(pancakeImage, Math.random()*canvas.width, 55, 140, 50)
+}
 
-// let newPancake = {
-//     x: Math.random()*canvas.width,
-//     y: -55,
-//     w: 50,
-//     h: 50
-// }
+let newPancake = {
+    x: Math.random()*canvas.width,
+    y: 55,
+    w: 140,
+    h: 50
+}
+
+let butterImage = new Image()
+butterImage.src = './images/butter.png'
+butterImage.onload = () => {
+    ctx.drawImage(butterImage, Math.random()*canvas.width, 55, 140, 50)
+}
+
+let sillySquidImage = new Image()
+sillySquidImage.src = './images/sillysquid.png'
+sillySquidImage.onload = () => {
+    ctx.drawImage(sillySquidImage, Math.random()*canvas.width, 55, 140, 50)
+}
 
 window.onkeydown = function (e) {
     switch (e.key) {
@@ -72,7 +84,9 @@ class Pancake{
     this.w = 50,
     this.h = 50,
     this.speedModifier = Math.random()*2,
-    this.id = id
+    this.id = id,
+    this.src = 'images/Pancake1.png'
+
     }
 }
 class Bonus{
@@ -101,54 +115,44 @@ let pancakesArr = []
 let id = 0
 
 setInterval(() => {
-    //pointcounterBadTopping+=100
     badToppingsArr.push(new badTopping(id++))
-    }, 2000)
-
-setInterval(() => {
-    // pointcounterPancake+=100
     pancakesArr.push(new Pancake(id++))
-    }, 2500)
-    
-setInterval(() => {
-    // pointcounterBonus+=100
     bonusesArr.push(new Bonus(id++))
-    }, 3000)
+    }, 2000)
 
 // let int
 
 
 // GAME ENGINE 
 
+let stackCollision = 0
 
 function startGame() {
     let int = window.requestAnimationFrame(startGame)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     // draw badToppings objects
-    ctx.fillStyle = 'purple'
     for (let badTopping of badToppingsArr){
-        ctx.fillRect(badTopping.x, badTopping.y +=(2*badTopping.speedModifier), badTopping.w, badTopping.h)
-        console.log(badToppingsArr)
+        ctx.drawImage(sillySquidImage, badTopping.x, badTopping.y +=(2*badTopping.speedModifier), badTopping.w, badTopping.h)
         detectBadToppingCollision(newPlate, badTopping)
         }
     // draw pancakes objects
-    // ctx.fillStyle = 'yellow'
     for (let pancake of pancakesArr){
-        ctx.drawImage(pancakeImg, pancake.x, pancake.y, pancake.w, pancake.h)
-        // ctx.fillRect(pancake.x, pancake.y +=(2*pancake.speedModifier), pancake.w, pancake.h)
+        ctx.drawImage(pancakeImage, pancake.x, pancake.y +=(2*pancake.speedModifier), pancake.w, pancake.h)
         detectPancakeCollision(newPlate, pancake)
         }
+    
     // draw bonus objects
-    ctx.fillStyle = 'pink'
+    // ctx.fillStyle = 'pink'
     for (let bonus of bonusesArr){
-        ctx.fillRect(bonus.x, bonus.y +=(2*bonus.speedModifier), bonus.w, bonus.h)
+        ctx.drawImage(butterImage, bonus.x, bonus.y +=(2*bonus.speedModifier), bonus.w, bonus.h)
         detectBonusCollision(newPlate, bonus)
         } 
+
     // plate catcher
     ctx.drawImage(plate, newPlate.x, newPlate.y, newPlate.w, newPlate.h)
     for(let i =0; i < stackedArray.length; i++){
         let pancake=stackedArray[i]
-        ctx.drawImage(plate, newPlate.x, newPlate.y-10*(i+1), pancake.w, pancake.h)
+        ctx.drawImage(pancakeImage, newPlate.x, newPlate.y-10*(i+1), newPlate.w, pancake.h)
     }
     
 }
@@ -158,14 +162,14 @@ function startGame() {
 
 // Collision Logics
 
-function detectBadToppingCollision(plate, badTopping) {
-    if (plate.x < badTopping.x + badTopping.w &&
-        plate.x + plate.w > badTopping.x &&
-        plate.y < badTopping.y + badTopping.h &&
-        plate.h + plate.y > badTopping.y) {
+function detectBadToppingCollision(thePlate, badTopping) {
+    if (thePlate.x < badTopping.x + badTopping.w &&
+        thePlate.x + thePlate.w > badTopping.x &&
+        thePlate.y + stackCollision < badTopping.y + badTopping.h &&
+        thePlate.h + thePlate.y + stackCollision > badTopping.y) {
             badToppingsArr = badToppingsArr.filter(badItem => badItem.id !== badTopping.id)
             // SUBTRACT FROM SCORE
-            plate.score -= 5
+            thePlate.score -= 5
             // UPDATE SCORE DISPLAY
             document.getElementById('score').innerHTML = "SCORE: " + newPlate.score;
         }
@@ -174,8 +178,8 @@ function detectBadToppingCollision(plate, badTopping) {
 function detectBonusCollision(thePlate, bonus) {
     if (thePlate.x < bonus.x + bonus.w &&
         thePlate.x + thePlate.w > bonus.x &&
-        thePlate.y < bonus.y + bonus.h &&
-        thePlate.h + thePlate.y > bonus.y) {
+        thePlate.y + stackCollision < bonus.y + bonus.h &&
+        thePlate.h + thePlate.y + stackCollision > bonus.y) {
             bonusesArr = bonusesArr.filter(bonusItem => bonusItem.id !== bonus.id)
             // ADD TO SCORE
             thePlate.score += 10
@@ -187,10 +191,11 @@ function detectBonusCollision(thePlate, bonus) {
 function detectPancakeCollision(thePlate, pancake) {
     if (thePlate.x < pancake.x + pancake.w &&
         thePlate.x + thePlate.w > pancake.x &&
-        thePlate.y < pancake.y + pancake.h &&
-        thePlate.h + thePlate.y > pancake.y) {
+        thePlate.y + stackCollision < pancake.y + pancake.h &&
+        thePlate.h + thePlate.y + stackCollision > pancake.y) {
             pancakesArr = pancakesArr.filter(pancakeItem => pancakeItem.id !== pancake.id)
             stackedArray.push(pancake)
+            stackCollision -= 20
             // for(pancake in stackedArray){
             //     thePlate.y += pancake[i+1].y
             // }
