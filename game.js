@@ -223,7 +223,7 @@ function detectBadToppingCollision(thePlate, badTopping) {
             // SUBTRACT FROM SCORE
             thePlate.score -= 5
             // UPDATE SCORE DISPLAY
-            document.getElementById('score').innerHTML = "SCORE: " + newPlate.score;
+            document.getElementById('score').innerHTML = "SCORE:" +  newPlate.score;
         }
 }
 
@@ -237,7 +237,7 @@ function detectBonusCollision(thePlate, bonus) {
             // ADD TO SCORE
             thePlate.score += 10
             // UPDATE SCORE DISPLAY
-            document.getElementById('score').innerHTML = "SCORE: " + newPlate.score;
+            document.getElementById('score').innerHTML = "SCORE:" + newPlate.score;
         }
 }
 
