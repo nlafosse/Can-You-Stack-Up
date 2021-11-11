@@ -284,7 +284,7 @@ function detectPancakeCollision(thePlate, pancake) {
     if(stackedArray.length >= 1){
     zombieAttack();
             }
-            if(stackedArray.length === 3) {
+            if(stackedArray.length === 10) {
                 alert("WHO WANTS SOME PANCAKES?");
                 document.location.reload();
                 clearInterval(interval); // Needed for Chrome to end game
