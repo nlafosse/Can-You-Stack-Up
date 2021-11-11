@@ -1,8 +1,8 @@
 body {
     margin: 0;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: space-around;
+    background-color: rgb(89, 98, 226);
 }
 
 canvas {
@@ -13,43 +13,46 @@ canvas {
     overflow: hidden;
 }
 
-#score
-{
-    font-size: 20px;
-    font-weight: bold;
-    color: #CC0000;
-}
-
-.game-intro {
+.gameStats {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 60%;
+    flex-direction: column;
+    justify-content: center;
 }
   
-.game-intro p {
+#score {
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    padding: 20px;
+    
+}
+
+#start-button {
+    font-size: 20px;
+    background-color: rgb(233, 193, 61);
+    color: #fff;
+    padding: 15px;
+    width: 150px;
+    border: 3px solid black;
+    border-radius: 5px;
+}
+
+#game-board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-board p {
     font-size: 15px;
     font-family: "Verdana";
-    line-height: 10px;
+    line-height: 5px;
+    text-align: center;
+    font-weight: bold;
+    color: white;
 }
 
 .game-description {
     display: flex;
     flex-direction: column;
-}
-
-#start-button {
-    margin-top 5px;
-    font-size: 15px;
-    background-color: thistle;
-    color: #fff;
-    padding: 15px;
-    border: 0;
-    box-shadow: 20px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-
-#game-board {
-    margin: 0;
 }
