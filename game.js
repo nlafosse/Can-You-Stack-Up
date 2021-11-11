@@ -2,7 +2,7 @@ const canvas = document.querySelector("canvas")
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 const ctx = canvas.getContext('2d')
-
+let backgroundMusic;
 
 
 // THE PLATE 
@@ -56,7 +56,6 @@ window.onkeydown = function (e) {
     } 
 }
 
-
 //  Falling objects
 class badTopping{
     constructor(id){
@@ -77,7 +76,7 @@ class Pancake{
     this.speedModifier = Math.random()*2,
     this.id = id,
     this.src = 'images/Pancake1.png'
-
+    this.sound = 'sound1'
     }
 }
 class Bonus{
@@ -90,7 +89,6 @@ class Bonus{
     this.id = id
     }
 }
-
 
 // arrays of falling objects &
 // let pointcounterBadTopping = 0
@@ -118,9 +116,34 @@ let int
 
 let stackCollision = 0
 
+// SOUND FUNCTION
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute('preload', 'auto');
+  this.sound.setAttribute('controls', 'none');
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+    this.sound.play();
+  }
+  this.stop = function() {
+    this.sound.pause();
+  }
+}
+
+backgroundMusic = new sound("./audio/Pancaketown.mp3");
+Plop = new sound("./audio/plop.flac");
+Yum = new sound("./audio/Yum.mp3");
+Yuck = new sound("./audio/Yuck.mp3")
+
+
 function startGame() {
     int = window.requestAnimationFrame(startGame)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+    // SOUND TEST -- GLITCHY
+    
+    backgroundMusic.play();
     // draw badToppings objects
     for (let badTopping of badToppingsArr){
         ctx.drawImage(sillySquidImage, badTopping.x, badTopping.y +=(2*badTopping.speedModifier), badTopping.w, badTopping.h)
@@ -146,10 +169,10 @@ function startGame() {
         let pancake=stackedArray[i]
         ctx.drawImage(pancakeImage, newPlate.x, newPlate.y-10*(i+1), newPlate.w, pancake.h)
     }
-    
 }
   
 // startGame()
+
 
 
 // Collision Logics
@@ -160,6 +183,7 @@ function detectBadToppingCollision(thePlate, badTopping) {
         thePlate.y + stackCollision < badTopping.y + badTopping.h &&
         thePlate.h + thePlate.y + stackCollision > badTopping.y) {
             badToppingsArr = badToppingsArr.filter(badItem => badItem.id !== badTopping.id)
+            Yuck.play();
             // SUBTRACT FROM SCORE
             thePlate.score -= 5
             // UPDATE SCORE DISPLAY
@@ -173,6 +197,7 @@ function detectBonusCollision(thePlate, bonus) {
         thePlate.y + stackCollision < bonus.y + bonus.h &&
         thePlate.h + thePlate.y + stackCollision > bonus.y) {
             bonusesArr = bonusesArr.filter(bonusItem => bonusItem.id !== bonus.id)
+            Yum.play();
             // ADD TO SCORE
             thePlate.score += 10
             // UPDATE SCORE DISPLAY
@@ -188,6 +213,7 @@ function detectPancakeCollision(thePlate, pancake) {
             pancakesArr = pancakesArr.filter(pancakeItem => pancakeItem.id !== pancake.id)
             stackedArray.push(pancake)
             stackCollision -= 20
+            Plop.play();
             // for(pancake in stackedArray){
             //     thePlate.y += pancake[i+1].y
             // }
