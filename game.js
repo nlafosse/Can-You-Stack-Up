@@ -280,10 +280,8 @@ function detectPancakeCollision(thePlate, pancake) {
             stackedArray.push(pancake)
             stackCollision -= 8
             Plop.play();
-            // for(pancake in stackedArray){
-            //     thePlate.y += pancake[i+1].y
-            // }
-            //COUNTING PANCAKES. If 10 pancakes stacked on plate END OF GAME
+            
+            //COUNTING PANCAKES. If 30 pancakes stacked on plate END OF GAME
     
     
     // ZOMBIE -- watch out once you reach (x number) of pancakes!
