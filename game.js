@@ -1,15 +1,13 @@
 const canvas = document.querySelector("canvas")
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+canvas.width = 990
+canvas.height = 480
 const ctx = canvas.getContext('2d')
-
-
 
 // THE PLATE 
 let plate = new Image()
 plate.src = './images/plate.png'
 plate.onload = () => {
-    ctx.drawImage(plate, 150, canvas.height - 200, 200, 60)
+    ctx.drawImage(plate, 150, canvas.height - 100, 200, 60)
     document.getElementById('score').innerHTML = "SCORE: " + newPlate.score;
     
 }
@@ -18,7 +16,7 @@ let stackedArray = []  // new array for collided objs that need to stack
 
 let newPlate = {
     x: 150,
-    y: canvas.height-200,
+    y: canvas.height-100,
     w: 200,
     h: 60,
     // SCORE COUNTER
