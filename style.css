@@ -3,7 +3,8 @@ body {
     overflow: hidden;
     display: flex;
     justify-content: space-around;
-    background-color: rgb(143, 221, 182);
+    background-color: #D7ECD9;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 canvas {
@@ -19,25 +20,30 @@ canvas {
     align-items: center;
     justify-content: space-around;
 }
-  
-#score {
-    font-size: 30px;
-    font-weight: bold;
-    text-align: justify;
-    color: white;
-    padding: 20px;
-    
+
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #start-button {
     font-size: 20px;
     background-color: rgb(233, 193, 61);
-    color: #fff;
+    color: #000;
     padding: 15px;
-    border: 0;
-    box-shadow: 50px;
+    width: 150px;
+    border: 3px solid black;
     border-radius: 5px;
 }
+  
+#score {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: justify;
+    color: black;
+    padding: 20px;
+    
+}
+
 
 .game-board {
     display: flex;
@@ -51,7 +57,7 @@ canvas {
     line-height: 5px;
     text-align: center;
     font-weight: bold;
-    color: white;
+    color: black;
 }
 
 .game-description {
