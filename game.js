@@ -144,12 +144,13 @@ let pancakesArr = []
 // intervals for falling objects
 let id = 0
 
-setInterval(() => {
+function itemDrop() {
+    setInterval(() => {
     badToppingsArr.push(new badTopping(id++,badToppingImages[Math.floor(Math.random()*badToppingImages.length)]))
     pancakesArr.push(new Pancake(id++))
     bonusesArr.push(new Bonus(id++,bonusImages[Math.floor(Math.random()*bonusImages.length)]))
     }, 3600)
-
+}
 
 // GAME ENGINE 
 
@@ -177,6 +178,10 @@ Yum = new sound("./audio/Yum.mp3");
 Yuck = new sound("./audio/Yuck.mp3")
 Rawr = new sound("./audio/ZombieCry.wav")
 
+function startGamePressed(){
+    itemDrop();
+    startGame();
+}
 
 function startGame() {
     let int = window.requestAnimationFrame(startGame)
@@ -279,12 +284,13 @@ function detectPancakeCollision(thePlate, pancake) {
             //     thePlate.y += pancake[i+1].y
             // }
             //COUNTING PANCAKES. If 10 pancakes stacked on plate END OF GAME
-           
+    
+    
     // ZOMBIE -- watch out once you reach (x number) of pancakes!
-    if(stackedArray.length >= 1){
-    zombieAttack();
-            }
-            if(stackedArray.length === 3) {
+    // if(stackedArray.length >= 1){
+    // zombieAttack();
+    //         }
+            if(stackedArray.length === 30) {
                 alert("WHO WANTS SOME PANCAKES?");
                 document.location.reload();
                 clearInterval(interval); // Needed for Chrome to end game
