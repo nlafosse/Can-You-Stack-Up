@@ -3,6 +3,30 @@ canvas.width = 1000
 canvas.height = 480
 const ctx = canvas.getContext('2d')
 
+// THE ZOMBIE
+let zombieSheet = new Image();
+zombieSheet.src = "./images/zombie.png";
+zombieSheet.onload = loadImages;
+let cols = 18;
+let rows = 1;
+//Setting the size of individual sprites
+let spriteWidth = zombieSheet.width/cols;
+let spriteHeight = zombieSheet.height/rows;
+//Make the animation play over 8 frames
+let totalFrames = 18;
+let currentFrame = 0;
+//Update source position
+let srcX = 0;
+let srcY = 0;
+//Record number of times zombieAttack function is called
+let framesDrawn = 0;
+
+let numOfImages = 1;
+function loadImages(){
+    if(numOfImages > 0) return;
+    zombieAttack();
+}
+
 // THE PLATE 
 let plate = new Image()
 plate.src = './images/plate.png'
@@ -45,10 +69,10 @@ whipCreamImage.width =100
 whipCreamImage.height =100
 
 //BAD TOPPINGS
-let sillySquidImage = new Image()
-sillySquidImage.src = './images/sillysquid.png'
-sillySquidImage.width =200
-sillySquidImage.height =200
+let sockImage = new Image()
+sockImage.src = './images/sock.png'
+sockImage.width =200
+sockImage.height =200
 
 let broccoliImage = new Image()
 broccoliImage.src = './images/broccoli.png'
@@ -61,7 +85,7 @@ hotsauceImage.width =60
 hotsauceImage.height =105
 
 //ARRAYS OF TOPPINGS TO ROTATE
-let badToppingImages =[sillySquidImage, broccoliImage, hotsauceImage]
+let badToppingImages =[sockImage, broccoliImage, hotsauceImage]
 let bonusImages =[butterImage, whipCreamImage, strawberryImage]
 
 
@@ -151,6 +175,7 @@ backgroundMusic = new sound("./audio/Pancaketown.mp3");
 Plop = new sound("./audio/plop.flac");
 Yum = new sound("./audio/Yum.mp3");
 Yuck = new sound("./audio/Yuck.mp3")
+Rawr = new sound("./audio/ZombieCry.wav")
 
 
 function startGame() {
@@ -216,6 +241,30 @@ function detectBonusCollision(thePlate, bonus) {
         }
 }
 
+function zombieAttack(){
+    let int = window.requestAnimationFrame(zombieAttack)
+    Rawr.play();
+ // this prompts the flipping of the sprite to the next one to reach the remaining frames  
+    currentFrame = currentFrame % totalFrames; 
+ // Update src position to show new sprite
+    srcX = currentFrame * spriteWidth;
+                       //image, srcX, srcY, srcWidth, srcHeight, destX, destY, destWidth, destHeight 
+    ctx.save();                  
+    resizeImage();        
+    ctx.drawImage(zombieSheet, srcX, srcY, spriteWidth, spriteHeight, 0, 0, spriteWidth, spriteHeight);
+    ctx.restore();
+
+    framesDrawn++;
+    if(framesDrawn >= 20){
+        currentFrame++;
+        framesDrawn = 0;
+    }
+}
+function resizeImage(){
+    let scaleFactor = .1
+    ctx.scale(scaleFactor, scaleFactor);
+}
+
 function detectPancakeCollision(thePlate, pancake) {
     if (thePlate.x < pancake.x + pancake.w &&
         thePlate.x + thePlate.w > pancake.x &&
@@ -229,7 +278,12 @@ function detectPancakeCollision(thePlate, pancake) {
             //     thePlate.y += pancake[i+1].y
             // }
             //COUNTING PANCAKES. If 10 pancakes stacked on plate END OF GAME
-            if(stackedArray.length === 40) {
+           
+    // ZOMBIE -- watch out once you reach (x number) of pancakes!
+    if(stackedArray.length >= 1){
+    zombieAttack();
+            }
+            if(stackedArray.length === 3) {
                 alert("WHO WANTS SOME PANCAKES?");
                 document.location.reload();
                 clearInterval(interval); // Needed for Chrome to end game
