@@ -1,8 +1,9 @@
 body {
-    margin: 0;
+    width: 100%;
+    overflow: hidden;
     display: flex;
     justify-content: space-around;
-    background-color: rgb(89, 98, 226);
+    background-color: rgb(143, 221, 182);
 }
 
 canvas {
@@ -10,18 +11,19 @@ canvas {
     background-image: url("images/dining-room.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    overflow: hidden;
 }
 
 .gameStats {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-around;
 }
   
 #score {
     font-size: 30px;
     font-weight: bold;
+    text-align: justify;
     color: white;
     padding: 20px;
     
@@ -37,10 +39,10 @@ canvas {
     border-radius: 5px;
 }
 
-#game-board {
+.game-board {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: space-between;
 }
 
 .game-board p {
