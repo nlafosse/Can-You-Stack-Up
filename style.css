@@ -23,7 +23,7 @@ canvas {
 .game-intro {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 60%;
 }
   
@@ -39,6 +39,7 @@ canvas {
 }
 
 #start-button {
+    margin-top 5px;
     font-size: 15px;
     background-color: thistle;
     color: #fff;
