@@ -1,5 +1,5 @@
 const canvas = document.querySelector("canvas")
-canvas.width = 990
+canvas.width = 1000
 canvas.height = 480
 const ctx = canvas.getContext('2d')
 
@@ -148,7 +148,7 @@ setInterval(() => {
     badToppingsArr.push(new badTopping(id++,badToppingImages[Math.floor(Math.random()*badToppingImages.length)]))
     pancakesArr.push(new Pancake(id++))
     bonusesArr.push(new Bonus(id++,bonusImages[Math.floor(Math.random()*bonusImages.length)]))
-    }, 2000)
+    }, 3600)
 
 
 // GAME ENGINE 
@@ -272,7 +272,7 @@ function detectPancakeCollision(thePlate, pancake) {
         thePlate.h + thePlate.y + stackCollision > pancake.y) {
             pancakesArr = pancakesArr.filter(pancakeItem => pancakeItem.id !== pancake.id)
             stackedArray.push(pancake)
-            stackCollision -= 10
+            stackCollision -= 8
             Plop.play();
             // for(pancake in stackedArray){
             //     thePlate.y += pancake[i+1].y
