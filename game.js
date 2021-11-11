@@ -27,7 +27,7 @@ let newPlate = {
     pancakeCount: 0
 } 
 
-// // THE PANCAKE -- in progress!
+// // THE PANCAKE
 
 let pancakeImage = new Image()
 pancakeImage.src = './images/Pancake1.png'
@@ -35,6 +35,12 @@ pancakeImage.src = './images/Pancake1.png'
 //GOOD TOPPINGS
 let butterImage = new Image()
 butterImage.src = './images/butter.png'
+
+// let strawberryImage = new Image()
+// strawberryImage = './images/strawberry.png'
+
+let whipCreamImage = new Image()
+whipCreamImage.src = './images/whipcream.png'
 
 //BAD TOPPINGS
 let sillySquidImage = new Image()
@@ -46,7 +52,9 @@ broccoliImage.src = './images/broccoli.png'
 let hotsauceImage = new Image()
 hotsauceImage.src = './images/hotsauce.png'
 
+//ARRAYS OF TOPPINGS TO ROTATE
 let badToppingImages =[sillySquidImage, broccoliImage, hotsauceImage]
+let bonusImages =[butterImage, whipCreamImage]
 
 
 window.onkeydown = function (e) {
@@ -77,8 +85,8 @@ class Pancake{
     constructor(id){
     this.x = Math.random()*canvas.width,
     this.y = -55,
-    this.w = 50,
-    this.h = 50,
+    this.w = 200,
+    this.h = 60,
     this.speedModifier = Math.random()*2,
     this.id = id,
     this.src = 'images/Pancake1.png'
@@ -93,6 +101,7 @@ class Bonus{
     this.h = 50,
     this.speedModifier = Math.random()*2,
     this.id = id
+    this.image = bonusImages[Math.floor(Math.random()*bonusImages.length)]
     }
 }
 
@@ -133,9 +142,8 @@ function startGame() {
         }
     
     // draw bonus objects
-    // ctx.fillStyle = 'pink'
     for (let bonus of bonusesArr){
-        ctx.drawImage(butterImage, bonus.x, bonus.y +=(2*bonus.speedModifier), bonus.w, bonus.h)
+        ctx.drawImage(bonus.image, bonus.x, bonus.y +=(2*bonus.speedModifier), bonus.w, bonus.h)
         detectBonusCollision(newPlate, bonus)
         } 
 
@@ -147,9 +155,6 @@ function startGame() {
     }
     
 }
-  
-// startGame()
-
 
 // Collision Logics
 
@@ -186,7 +191,7 @@ function detectPancakeCollision(thePlate, pancake) {
         thePlate.h + thePlate.y + stackCollision > pancake.y) {
             pancakesArr = pancakesArr.filter(pancakeItem => pancakeItem.id !== pancake.id)
             stackedArray.push(pancake)
-            stackCollision -= 12
+            stackCollision -= 10
             // for(pancake in stackedArray){
             //     thePlate.y += pancake[i+1].y
             // }
