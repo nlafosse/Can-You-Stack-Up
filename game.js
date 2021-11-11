@@ -1,15 +1,13 @@
 const canvas = document.querySelector("canvas")
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+canvas.width = 990
+canvas.height = 480
 const ctx = canvas.getContext('2d')
-let backgroundMusic;
-
 
 // THE PLATE 
 let plate = new Image()
 plate.src = './images/plate.png'
 plate.onload = () => {
-    ctx.drawImage(plate, 150, canvas.height - 200, 200, 60)
+    ctx.drawImage(plate, 150, canvas.height - 100, 200, 60)
     document.getElementById('score').innerHTML = "SCORE: " + newPlate.score;
     
 }
@@ -18,7 +16,7 @@ let stackedArray = []  // new array for collided objs that need to stack
 
 let newPlate = {
     x: 150,
-    y: canvas.height-200,
+    y: canvas.height-100,
     w: 200,
     h: 60,
     // SCORE COUNTER
@@ -27,23 +25,35 @@ let newPlate = {
     pancakeCount: 0
 } 
 
-// // THE PANCAKE -- in progress!
+// // THE PANCAKE
 
 let pancakeImage = new Image()
 pancakeImage.src = './images/Pancake1.png'
 
-let newPancake = {
-    x: Math.random()*canvas.width,
-    y: 55,
-    w: 140,
-    h: 50
-}
-
+//GOOD TOPPINGS
 let butterImage = new Image()
 butterImage.src = './images/butter.png'
 
+// let strawberryImage = new Image()
+// strawberryImage = './images/strawberry.png'
+
+let whipCreamImage = new Image()
+whipCreamImage.src = './images/whipcream.png'
+
+//BAD TOPPINGS
 let sillySquidImage = new Image()
 sillySquidImage.src = './images/sillysquid.png'
+
+let broccoliImage = new Image()
+broccoliImage.src = './images/broccoli.png'
+
+let hotsauceImage = new Image()
+hotsauceImage.src = './images/hotsauce.png'
+
+//ARRAYS OF TOPPINGS TO ROTATE
+let badToppingImages =[sillySquidImage, broccoliImage, hotsauceImage]
+let bonusImages =[butterImage, whipCreamImage]
+
 
 window.onkeydown = function (e) {
     switch (e.key) {
@@ -65,14 +75,15 @@ class badTopping{
     this.h = 50,
     this.speedModifier = Math.random()*2,
     this.id = id
+    this.image = badToppingImages[Math.floor(Math.random()*badToppingImages.length)]
     }
 }
 class Pancake{
     constructor(id){
     this.x = Math.random()*canvas.width,
     this.y = -55,
-    this.w = 50,
-    this.h = 50,
+    this.w = 200,
+    this.h = 60,
     this.speedModifier = Math.random()*2,
     this.id = id,
     this.src = 'images/Pancake1.png'
@@ -87,17 +98,14 @@ class Bonus{
     this.h = 50,
     this.speedModifier = Math.random()*2,
     this.id = id
+    this.image = bonusImages[Math.floor(Math.random()*bonusImages.length)]
     }
 }
 
 // arrays of falling objects &
-// let pointcounterBadTopping = 0
+
 let badToppingsArr = []
-
-// let pointcounterBonus = 0
 let bonusesArr = []
-
-// let pointcounterPancake = 0
 let pancakesArr = []
 
 // intervals for falling objects
@@ -108,8 +116,6 @@ setInterval(() => {
     pancakesArr.push(new Pancake(id++))
     bonusesArr.push(new Bonus(id++))
     }, 2000)
-
-let int
 
 
 // GAME ENGINE 
@@ -139,16 +145,17 @@ Yuck = new sound("./audio/Yuck.mp3")
 
 
 function startGame() {
-    int = window.requestAnimationFrame(startGame)
+    let int = window.requestAnimationFrame(startGame)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     // SOUND TEST -- GLITCHY
     
     backgroundMusic.play();
     // draw badToppings objects
     for (let badTopping of badToppingsArr){
-        ctx.drawImage(sillySquidImage, badTopping.x, badTopping.y +=(2*badTopping.speedModifier), badTopping.w, badTopping.h)
+        ctx.drawImage(badTopping.image, badTopping.x, badTopping.y +=(2*badTopping.speedModifier), badTopping.w, badTopping.h)
         detectBadToppingCollision(newPlate, badTopping)
         }
+   
     // draw pancakes objects
     for (let pancake of pancakesArr){
         ctx.drawImage(pancakeImage, pancake.x, pancake.y +=(2*pancake.speedModifier), pancake.w, pancake.h)
@@ -156,23 +163,18 @@ function startGame() {
         }
     
     // draw bonus objects
-    // ctx.fillStyle = 'pink'
     for (let bonus of bonusesArr){
-        ctx.drawImage(butterImage, bonus.x, bonus.y +=(2*bonus.speedModifier), bonus.w, bonus.h)
+        ctx.drawImage(bonus.image, bonus.x, bonus.y +=(2*bonus.speedModifier), bonus.w, bonus.h)
         detectBonusCollision(newPlate, bonus)
         } 
 
     // plate catcher
     ctx.drawImage(plate, newPlate.x, newPlate.y, newPlate.w, newPlate.h)
-
     for(let i =0; i < stackedArray.length; i++){
         let pancake=stackedArray[i]
         ctx.drawImage(pancakeImage, newPlate.x, newPlate.y-10*(i+1), newPlate.w, pancake.h)
     }
 }
-  
-// startGame()
-
 
 
 // Collision Logics
@@ -218,7 +220,7 @@ function detectPancakeCollision(thePlate, pancake) {
             //     thePlate.y += pancake[i+1].y
             // }
             //COUNTING PANCAKES. If 10 pancakes stacked on plate END OF GAME
-            if(stackedArray.length === 10) {
+            if(stackedArray.length === 30) {
                 alert("WHO WANTS SOME PANCAKES?");
                 document.location.reload();
                 clearInterval(interval); // Needed for Chrome to end game
