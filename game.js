@@ -57,8 +57,8 @@ pancakeImage.src = './images/Pancake1.png'
 //GOOD TOPPINGS
 let butterImage = new Image()
 butterImage.src = './images/butter.png'
-butterImage.width =50
-butterImage.height =50
+butterImage.width =70
+butterImage.height =60
 
 let strawberryImage = new Image()
 strawberryImage.src = './images/strawberry.png'
@@ -248,10 +248,11 @@ function zombieAttack(){
     currentFrame = currentFrame % totalFrames; 
  // Update src position to show new sprite
     srcX = currentFrame * spriteWidth;
-                       //image, srcX, srcY, srcWidth, srcHeight, destX, destY, destWidth, destHeight 
+ 
     ctx.save();                  
-    resizeImage();        
-    ctx.drawImage(zombieSheet, srcX, srcY, spriteWidth, spriteHeight, 0, 0, spriteWidth, spriteHeight);
+    resizeImage(); 
+                    //image, srcX, srcY, srcWidth, srcHeight, destX, destY, destWidth, destHeight       
+    ctx.drawImage(zombieSheet, srcX, srcY, spriteWidth, spriteHeight, 0, canvas.height-200, spriteWidth, spriteHeight);
     ctx.restore();
 
     framesDrawn++;
@@ -261,7 +262,7 @@ function zombieAttack(){
     }
 }
 function resizeImage(){
-    let scaleFactor = .1
+    let scaleFactor = 0.5
     ctx.scale(scaleFactor, scaleFactor);
 }
 

@@ -32,13 +32,8 @@ canvas {
     background-color: rgb(233, 193, 61);
     color: #fff;
     padding: 15px;
-<<<<<<< HEAD
     border: 0;
     box-shadow: 50px;
-=======
-    width: 150px;
-    border: 3px solid black;
->>>>>>> 7e4efb6ff48131b81a65d81914089b042f652edc
     border-radius: 5px;
 }
 
