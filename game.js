@@ -33,26 +33,36 @@ pancakeImage.src = './images/Pancake1.png'
 //GOOD TOPPINGS
 let butterImage = new Image()
 butterImage.src = './images/butter.png'
+butterImage.width =50
+butterImage.height =50
 
-// let strawberryImage = new Image()
-// strawberryImage = './images/strawberry.png'
+let strawberryImage = new Image()
+strawberryImage.src = './images/strawberry.png'
 
 let whipCreamImage = new Image()
 whipCreamImage.src = './images/whipcream.png'
+whipCreamImage.width =100
+whipCreamImage.height =100
 
 //BAD TOPPINGS
 let sillySquidImage = new Image()
 sillySquidImage.src = './images/sillysquid.png'
+sillySquidImage.width =200
+sillySquidImage.height =200
 
 let broccoliImage = new Image()
 broccoliImage.src = './images/broccoli.png'
+broccoliImage.width =100
+broccoliImage.height =100
 
 let hotsauceImage = new Image()
 hotsauceImage.src = './images/hotsauce.png'
+hotsauceImage.width =60
+hotsauceImage.height =105
 
 //ARRAYS OF TOPPINGS TO ROTATE
 let badToppingImages =[sillySquidImage, broccoliImage, hotsauceImage]
-let bonusImages =[butterImage, whipCreamImage]
+let bonusImages =[butterImage, whipCreamImage, strawberryImage]
 
 
 window.onkeydown = function (e) {
@@ -68,14 +78,14 @@ window.onkeydown = function (e) {
 
 //  Falling objects
 class badTopping{
-    constructor(id){
+    constructor(id,image){
     this.x = Math.random()*canvas.width,
     this.y = -55,
-    this.w = 50,
-    this.h = 50,
+    this.w = image.width,
+    this.h = image.height,
     this.speedModifier = Math.random()*2,
     this.id = id
-    this.image = badToppingImages[Math.floor(Math.random()*badToppingImages.length)]
+    this.image = image
     }
 }
 class Pancake{
@@ -87,18 +97,17 @@ class Pancake{
     this.speedModifier = Math.random()*2,
     this.id = id,
     this.src = 'images/Pancake1.png'
-    this.sound = 'sound1'
     }
 }
 class Bonus{
-    constructor(id){
+    constructor(id,image){
     this.x = Math.random()*canvas.width,
     this.y = -55,
-    this.w = 50,
-    this.h = 50,
+    this.w = image.width,
+    this.h = image.height,
     this.speedModifier = Math.random()*2,
     this.id = id
-    this.image = bonusImages[Math.floor(Math.random()*bonusImages.length)]
+    this.image = image
     }
 }
 
@@ -112,9 +121,9 @@ let pancakesArr = []
 let id = 0
 
 setInterval(() => {
-    badToppingsArr.push(new badTopping(id++))
+    badToppingsArr.push(new badTopping(id++,badToppingImages[Math.floor(Math.random()*badToppingImages.length)]))
     pancakesArr.push(new Pancake(id++))
-    bonusesArr.push(new Bonus(id++))
+    bonusesArr.push(new Bonus(id++,bonusImages[Math.floor(Math.random()*bonusImages.length)]))
     }, 2000)
 
 
