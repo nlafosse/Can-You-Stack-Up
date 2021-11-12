@@ -173,7 +173,7 @@ function sound(src) {
 }
 
 backgroundMusic = new sound("./audio/Pancaketown.mp3");
-Plop = new sound("./audio/plop.flac");
+Plop = new sound("./audio/Plop.mp3");
 Yum = new sound("./audio/Yum.mp3");
 Yuck = new sound("./audio/Yuck.mp3")
 Rawr = new sound("./audio/ZombieCry.wav")
@@ -186,7 +186,6 @@ function startGamePressed(){
 function startGame() {
     let int = window.requestAnimationFrame(startGame)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    // SOUND TEST -- GLITCHY
     
     backgroundMusic.play();
     // draw badToppings objects
@@ -280,11 +279,6 @@ function detectPancakeCollision(thePlate, pancake) {
             stackedArray.push(pancake)
             stackCollision -= 7
             Plop.play();
-            // for(pancake in stackedArray){
-            //     thePlate.y += pancake[i+1].y
-            // }
-            //COUNTING PANCAKES. If 10 pancakes stacked on plate END OF GAME
-    
     
     // ZOMBIE -- watch out once you reach (x number) of pancakes!
     // if(stackedArray.length >= 1){
