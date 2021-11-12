@@ -278,7 +278,7 @@ function detectPancakeCollision(thePlate, pancake) {
         thePlate.h + thePlate.y + stackCollision > pancake.y) {
             pancakesArr = pancakesArr.filter(pancakeItem => pancakeItem.id !== pancake.id)
             stackedArray.push(pancake)
-            stackCollision -= 8
+            stackCollision -= 7
             Plop.play();
             // for(pancake in stackedArray){
             //     thePlate.y += pancake[i+1].y
